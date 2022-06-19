@@ -2,9 +2,14 @@
 #include <stdlib.h>
 
 #define PLAYER_CHOOSE \
-  printf("$:Do you want 'x' or 'o' ? ");
+  printf("$:DO YOU WANT 'x' OR 'o' ? ");
 
 #define BORDER "*-----------*"
+
+#define ALREADY_USED\
+  printf("$:YOU HAVE MISSED A SHOT\n");
+
+#define INTENT_POSITION(_) printf("$:[PLAYER-%d] WHICH POSITION ? ",_);
 
 #define SEPARATOR \
   printf("|-----------|\n");
@@ -20,9 +25,6 @@ void BOARD_PLAY(char *board){
 }
 
 void HANDLE_P(char* PLAYER_1,char* PLAYER_2,int *id){
-  printf("%s\n",BORDER);
-  printf("   PLAYER %d\n",*id);
-  printf("%s\n",BORDER);
   PLAYER_CHOOSE
   char INTENT='-';
   while(1){
@@ -46,20 +48,99 @@ void CONSTRUCT_BOARD(char *board){
 int MALLOC_CONTAINS(int *Malloc,int *n,unsigned int *k){
   for(int i=0;i<*n;i++){
     if(Malloc[i] == *k){
-      break;
-      return 0;
+      return 1;
     }
   }
-  return 1;
+  return 0;
+}
+
+int CHECK_WINNER(char *board){
+  
+  /*CASE 1*/
+  if(board[0] == 'x' && board[1] == 'x' && board[2] == 'x'){
+    printf("$:[GAME] THE WINNER IS x\n");
+    return 0;
+  }else if(board[0] == 'o' && board[1] == 'o' && board[2] == 'o'){
+    printf("$:[GAME] THE WINNER IS o\n");
+    return 0;
+  }
+  /*CASE 2*/
+  else if(board[0] == 'x' && board[3] == 'x' && board[6] == 'x'){
+    printf("$:[GAME] THE WINNER IS x\n");
+    return 0;
+  }
+  else if(board[0] == 'o' && board[3] == 'o' && board[6] == 'o'){
+    printf("$:[GAME] THE WINNER IS o\n");
+    return 0;
+  }
+  /*CASE 3*/
+  else if(board[6] == 'x' && board[7] == 'x' && board[8] == 'x'){
+    printf("$:[GAME] THE WINNER IS x\n");
+    return 0;
+  }
+  else if(board[6] == 'o' && board[7] == 'o' && board[8] == 'o'){
+    printf("$:[GAME] THE WINNER IS o\n");
+    return 0;
+  }
+  /*CASE 4*/
+  else if(board[2] == 'x' && board[5] == 'x' && board[8] == 'x'){
+    printf("$:[GAME] THE WINNER IS x\n");
+    return 0;
+  }
+  else if(board[2] == 'o' && board[5] == 'o' && board[8] == 'o'){
+    printf("$:[GAME] THE WINNER IS o\n");
+    return 0;
+  }
+  /*CASE 5*/
+  else if(board[3] == 'x' && board[4] == 'x' && board[5] == 'x'){
+    printf("$:[GAME] THE WINNER IS x\n");
+    return 0;
+  }
+  else if(board[3] == 'o' && board[4] == 'o' && board[5] == 'o'){
+    printf("$:[GAME] THE WINNER IS o\n");
+    return 0;
+  }
+  /*CASE 6*/
+  else if(board[0] == 'x' && board[4] == 'x' && board[8] == 'x'){
+    printf("$:[GAME] THE WINNER IS x\n");
+    return 0;
+  }
+  else if(board[0] == 'o' && board[4] == 'o' && board[8] == 'o'){
+    printf("$:[GAME] THE WINNER IS o\n");
+    return 0;
+  }
+  /*CASE 7*/
+  else if(board[1] == 'x' && board[4] == 'x' && board[7] == 'x'){
+    printf("$:[GAME] THE WINNER IS x\n");
+    return 0;
+  }
+  else if(board[1] == 'o' && board[4] == 'o' && board[7] == 'o'){
+    printf("$:[GAME] THE WINNER IS o\n");
+    return 0;
+  }
+  /*CASE 8*/
+  else if(board[6] == 'x' && board[4] == 'x' && board[2] == 'x'){
+    printf("$:[GAME] THE WINNER IS x\n");
+    return 0;
+  }
+  else if(board[6] == 'o' && board[4] == 'o' && board[2] == 'o'){
+    printf("$:[GAME] THE WINNER IS o\n");
+    return 0;
+  }  
+  
+  return -1;
 }
 int main(void){
-
+  
   char PLAYER_1='-',PLAYER_2='-';
   unsigned int B_POSITION_A,B_POSITION_B;
   int GAME_BOARD_SIZE=9;
+  
   char* GAME_BOARD =(char*)malloc(*&GAME_BOARD_SIZE*sizeof(char));
   static unsigned int INDEX_POS=0;
-  int * POSITION=(int*)malloc(8*sizeof(int));
+  
+  int * POSITION   = (int*)malloc(8*sizeof(int));
+  int   POSITION_S = 0;
   
   for(int i=0;i<9;i++){
       POSITION[i]=-1;
@@ -68,48 +149,96 @@ int main(void){
   CONSTRUCT_BOARD(GAME_BOARD);
   int id_a=1,id_b=2;
   HANDLE_P(&PLAYER_1,&PLAYER_2,&id_a);
+  
   printf("$:PLAYER 1 '%c' PLAYER 2 '%c'\n",*&PLAYER_1,*&PLAYER_2);
-  printf("\n");
   BOARD_PLAY(GAME_BOARD);
   
-  while(1==1){
+  while(1 == 1){
     
-    printf("$:PLAYER 1 position ? ");
+    INTENT_POSITION(1)
     scanf("%u",&B_POSITION_A);
+    
     if(B_POSITION_A >=0 && B_POSITION_A <9){
-      
-      if(MALLOC_CONTAINS(POSITION,&GAME_BOARD_SIZE,&B_POSITION_A) == 1){
+      int __=MALLOC_CONTAINS(POSITION,&GAME_BOARD_SIZE,&B_POSITION_A);
+      if(__ == 0){
+        
         GAME_BOARD[B_POSITION_A]=PLAYER_1;
         POSITION[INDEX_POS]=B_POSITION_A;
-        BOARD_PLAY(GAME_BOARD);
+        BOARD_PLAY (GAME_BOARD);
         INDEX_POS=-(~INDEX_POS);
-      }else{
-        printf("$:Position already used\n");
+        
+        int WINNER_G=CHECK_WINNER(GAME_BOARD);
+        if(WINNER_G == 0){break;}
+        
+      }else if(__ == 1){
+        ALREADY_USED
       }
-      
     }else{
       while(1 == 1){
-        printf("$:PLAYER 1 valid position ? ");
-        scanf("%u",&B_POSITION_A);
-        if(B_POSITION_A >=0 && B_POSITION_A <9){
-          
-          if(MALLOC_CONTAINS(POSITION,&GAME_BOARD_SIZE,&B_POSITION_A) == 1){
-            GAME_BOARD[B_POSITION_A]=PLAYER_1;
-            POSITION[INDEX_POS]=B_POSITION_A;
-            BOARD_PLAY(GAME_BOARD);
-            INDEX_POS=-(~INDEX_POS);
-          }else{
-            printf("$:Position already used\n");
+          printf("$:PLAYER-1 VALID POSITION ? ");
+          scanf("%u",&B_POSITION_A);
+          if(B_POSITION_A >=0 && B_POSITION_A <9){
+            int __=MALLOC_CONTAINS(POSITION,&GAME_BOARD_SIZE,&B_POSITION_A);
+            if(__ == 0){
+              GAME_BOARD[B_POSITION_A]=PLAYER_1;
+              POSITION[INDEX_POS]=B_POSITION_A;
+              BOARD_PLAY (GAME_BOARD);
+              INDEX_POS=-(~INDEX_POS);
+              
+              int WINNER_G=CHECK_WINNER(GAME_BOARD);
+              if(WINNER_G == 0){break;}
+              
+            }else{
+              ALREADY_USED
+            }
+            break;
           }
-          
-          break;
-        }
       }
     }
-    /*for(int i=0;i<9;i++){
-      printf("POSITION USED %d\n",POSITION[i]);
-    }*/
     
+    INTENT_POSITION(2)
+    scanf("%u",&B_POSITION_B);
+        if(B_POSITION_B >=0 && B_POSITION_B <9){
+      int __=MALLOC_CONTAINS(POSITION,&GAME_BOARD_SIZE,&B_POSITION_B);
+      if(__ == 0){
+        GAME_BOARD[B_POSITION_B]=PLAYER_2;
+        POSITION[INDEX_POS]=B_POSITION_B;
+        
+        BOARD_PLAY (GAME_BOARD);
+        INDEX_POS=-(~INDEX_POS);
+        
+        int WINNER_G=CHECK_WINNER(GAME_BOARD);
+        if(WINNER_G == 0){break;}
+        
+      }else if(__ == 1){
+        ALREADY_USED
+      }
+    }else{
+        while(1 == 1){
+          printf("$:PLAYER-2 VALID POSITION ? ");
+          scanf("%u",&B_POSITION_B);
+          if(B_POSITION_B >=0 && B_POSITION_B <9){
+            
+            int __=MALLOC_CONTAINS(POSITION,&GAME_BOARD_SIZE,&B_POSITION_B);
+            if(__ == 0){
+              
+              GAME_BOARD[B_POSITION_B]=PLAYER_2;
+              POSITION[INDEX_POS]=B_POSITION_B;
+              BOARD_PLAY (GAME_BOARD);
+              INDEX_POS=-(~INDEX_POS);
+
+              int WINNER_G=CHECK_WINNER(GAME_BOARD);
+              if(WINNER_G == 0){break;}
+              
+            }else{
+              ALREADY_USED
+            }
+            break;
+          }
+      }
+    }
+    
+
   }
   return 0;
 }
