@@ -3,14 +3,14 @@
 
 #define PLAYER_CHOOSE \
   printf("$:DO YOU WANT 'x' OR 'o' ? ");
-
 #define BORDER "*-----------*"
-
 #define ALREADY_USED\
   printf("$:YOU HAVE MISSED A SHOT\n");
-
 #define INTENT_POSITION(_) printf("$:[PLAYER-%d] WHICH POSITION ? ",_);
-
+#define WINNER_X \
+  printf("$:[GAME] THE WINNER IS x\n");
+#define WINNER_O \
+  printf("$:[GAME] THE WINNER IS o\n");
 #define SEPARATOR \
   printf("|-----------|\n");
 
@@ -58,73 +58,73 @@ int CHECK_WINNER(char *board){
   
   /*CASE 1*/
   if(board[0] == 'x' && board[1] == 'x' && board[2] == 'x'){
-    printf("$:[GAME] THE WINNER IS x\n");
+    WINNER_X
     return 0;
   }else if(board[0] == 'o' && board[1] == 'o' && board[2] == 'o'){
-    printf("$:[GAME] THE WINNER IS o\n");
+    WINNER_O
     return 0;
   }
   /*CASE 2*/
   else if(board[0] == 'x' && board[3] == 'x' && board[6] == 'x'){
-    printf("$:[GAME] THE WINNER IS x\n");
+    WINNER_X
     return 0;
   }
   else if(board[0] == 'o' && board[3] == 'o' && board[6] == 'o'){
-    printf("$:[GAME] THE WINNER IS o\n");
+    WINNER_O
     return 0;
   }
   /*CASE 3*/
   else if(board[6] == 'x' && board[7] == 'x' && board[8] == 'x'){
-    printf("$:[GAME] THE WINNER IS x\n");
+    WINNER_X
     return 0;
   }
   else if(board[6] == 'o' && board[7] == 'o' && board[8] == 'o'){
-    printf("$:[GAME] THE WINNER IS o\n");
+    WINNER_O
     return 0;
   }
   /*CASE 4*/
   else if(board[2] == 'x' && board[5] == 'x' && board[8] == 'x'){
-    printf("$:[GAME] THE WINNER IS x\n");
+    WINNER_X
     return 0;
   }
   else if(board[2] == 'o' && board[5] == 'o' && board[8] == 'o'){
-    printf("$:[GAME] THE WINNER IS o\n");
+    WINNER_O
     return 0;
   }
   /*CASE 5*/
   else if(board[3] == 'x' && board[4] == 'x' && board[5] == 'x'){
-    printf("$:[GAME] THE WINNER IS x\n");
+    WINNER_X
     return 0;
   }
   else if(board[3] == 'o' && board[4] == 'o' && board[5] == 'o'){
-    printf("$:[GAME] THE WINNER IS o\n");
+    WINNER_O
     return 0;
   }
   /*CASE 6*/
   else if(board[0] == 'x' && board[4] == 'x' && board[8] == 'x'){
-    printf("$:[GAME] THE WINNER IS x\n");
+    WINNER_X
     return 0;
   }
   else if(board[0] == 'o' && board[4] == 'o' && board[8] == 'o'){
-    printf("$:[GAME] THE WINNER IS o\n");
+    WINNER_O
     return 0;
   }
   /*CASE 7*/
   else if(board[1] == 'x' && board[4] == 'x' && board[7] == 'x'){
-    printf("$:[GAME] THE WINNER IS x\n");
+    WINNER_X
     return 0;
   }
   else if(board[1] == 'o' && board[4] == 'o' && board[7] == 'o'){
-    printf("$:[GAME] THE WINNER IS o\n");
+    WINNER_O
     return 0;
   }
   /*CASE 8*/
   else if(board[6] == 'x' && board[4] == 'x' && board[2] == 'x'){
-    printf("$:[GAME] THE WINNER IS x\n");
+    WINNER_X
     return 0;
   }
   else if(board[6] == 'o' && board[4] == 'o' && board[2] == 'o'){
-    printf("$:[GAME] THE WINNER IS o\n");
+    WINNER_O
     return 0;
   }  
   
